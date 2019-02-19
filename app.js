@@ -10,10 +10,12 @@ const applications = require('./applications');
 
 /* todo sækja stillingar úr env */
 
+/*  LAGA MIG BRUV
 if (!sessionSecret) {
   console.error('Add SESSION_SECRET to .env');
   process.exit(1);
 }
+*/
 
 const app = express();
 
