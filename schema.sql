@@ -11,5 +11,12 @@ CREATE TABLE applications (
 );
 
 CREATE TABLE users (
-  /* todo skema */
+  id serial primary key,
+  name varchar(128) not null,
+  email varchar(256) not null,
+  username varchar(128) not null,
+  password1 varchar(64) not null,
+  isAdmin boolean default false,
+  created timestamp with time zone not null default current_timestamp,
+  updated timestamp with time zone not null default current_timestamp
 );

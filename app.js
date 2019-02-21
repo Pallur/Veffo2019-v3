@@ -3,25 +3,37 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 
+const sessionSecret = require('express-session');
+const passport = require('passport');
+const { Strategy } = require('passport-local');
 const apply = require('./apply');
 const register = require('./register');
+const login = require('./login');
 const admin = require('./admin');
 const applications = require('./applications');
 
 /* todo sækja stillingar úr env */
 
-/*  LAGA MIG BRUV
+
 if (!sessionSecret) {
   console.error('Add SESSION_SECRET to .env');
   process.exit(1);
 }
-*/
+
 
 const app = express();
 
 /* todo stilla session og passport */
 
 app.use(express.urlencoded({ extended: true }));
+
+// Passport mun verða notað með session
+app.use(sessionSecret({
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+  maxAge: 20 * 1000, // 20 sek
+}));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -45,6 +57,7 @@ app.locals.isInvalid = isInvalid;
 
 app.use('/', apply);
 app.use('/register', register);
+app.use('/login', login);
 app.use('/applications', applications);
 app.use('/admin', admin);
 

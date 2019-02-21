@@ -23,3 +23,13 @@ INSERT INTO applications
 VALUES
 ('John Johnson', 'john@example.org', 1000000, 'Etiam accumsan neque nec mauris fringilla, id dignissim tortor maximus. Proin sit amet sodales felis. Vivamus ut est magna. Quisque porta quam ac orci dignissim convallis. Nunc efficitur sagittis felis at gravida. Praesent quis quam molestie, rutrum mi sed, malesuada nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis tortor, imperdiet in metus eget, bibendum aliquet nisl.', 'verkefnastjóri');
 
+INSERT INTO users
+(username, password1, name, email)
+VALUES
+('admin', 'asdfasdf', 'Admin', 'admin@example.org');
+
+INSERT INTO users
+(username, password1, name, email)
+VALUES
+('nn', '12341234', 'Nafnlaus', 'nn@example.org');
+
