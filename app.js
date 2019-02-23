@@ -21,10 +21,8 @@ if (!sessionSecret) {
 
 const app = express();
 
-const {
-  HOST: hostname = '127.0.0.1',
-  PORT: port = 3000,
-} = process.env;
+const host = '127.0.0.1';
+const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -149,6 +147,6 @@ function errorHandler(error, req, res, next) { // eslint-disable-line
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-app.listen(port, hostname, () => {
-  console.info(`Server running at http://${hostname}:${port}/`);
+app.listen(port, () => {
+  console.info(`Server running at http://${host}:${port}/`);
 });
