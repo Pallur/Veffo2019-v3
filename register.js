@@ -67,7 +67,8 @@ const validations = [
   check('username')
     .custom(async (val) => {
       const result = await findUserName(val);
-      return result.rowCount === 0;})
+      return result.rowCount === 0;
+    })
     .withMessage('Notendanafn er ekki laust'),
 
   check('password')
@@ -188,7 +189,7 @@ async function formPost(req, res) {
     password2,
   };
 
-  data.password = await bcrypt.hash(data.password, 11); 
+  data.password = await bcrypt.hash(data.password, 11);
   await insert2(data);
   return res.redirect('/login');
 }
