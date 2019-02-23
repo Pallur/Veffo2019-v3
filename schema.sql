@@ -15,8 +15,8 @@ CREATE TABLE users (
   name varchar(128) not null,
   email varchar(256) not null,
   username varchar(128) not null,
-  password1 varchar(64) not null,
-  isAdmin boolean default false,
+  password varchar(128) not null,
+  admin boolean default false,
   created timestamp with time zone not null default current_timestamp,
   updated timestamp with time zone not null default current_timestamp
 );

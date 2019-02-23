@@ -2,8 +2,10 @@ const xss = require('xss');
 const express = require('express');
 const { check, validationResult } = require('express-validator/check');
 const { sanitize } = require('express-validator/filter');
+const bcrypt = require('bcrypt');
 
-const { insert2 } = require('./db');
+const { insert2, query } = require('./db');
+
 
 /**
  * Higher-order fall sem umlykur async middleware með villumeðhöndlun.
@@ -13,6 +15,11 @@ const { insert2 } = require('./db');
  */
 function catchErrors(fn) {
   return (req, res, next) => fn(req, res, next).catch(next);
+}
+
+function findUserName(user) {
+  const q = 'SELECT * FROM users WHERE username = $1';
+  return query(q, [user]);
 }
 
 /**
@@ -57,12 +64,20 @@ const validations = [
     .isLength({ min: 1 })
     .withMessage('Notendanafn má ekki vera tómt'),
 
-  check('password1')
+  check('username')
+    .custom(async (val) => {
+      const result = await findUserName(val);
+      return result.rowCount === 0;})
+    .withMessage('Notendanafn er ekki laust'),
+
+  check('password')
     .isLength({ min: 8 })
     .withMessage('Lykilorð verður að vera a.m.k 8 stafir'),
 
   check('password2')
-    // setja inn að prufa hvort sama og password
+    .isLength({ min: 8 })
+    .withMessage('Lykilorð verður að vera a.m.k 8 stafir')
+    .custom((val, { req }) => val === req.body.password)
     .withMessage('Lykilorð verða að vera eins'),
 ];
 
@@ -77,10 +92,10 @@ const sanitazions = [
   sanitizeXss('username'),
   sanitize('username').trim().escape(),
 
-  sanitizeXss('password1'),
-  sanitize('password1').trim().escape(),
+  sanitizeXss('password'),
+  sanitize('password').trim().escape(),
 
-  sanitizeXss('password2b'),
+  sanitizeXss('password2'),
   sanitize('password2').trim().escape(),
 ];
 
@@ -97,7 +112,7 @@ function register(req, res) {
     name: '',
     email: '',
     username: '',
-    password1: '',
+    password: '',
     password2: '',
     errors: [],
     page: 'register',
@@ -121,7 +136,7 @@ function showErrors(req, res, next) {
       name = '',
       email = '',
       username = '',
-      password1 = '',
+      password = '',
       password2 = '',
     } = {},
   } = req;
@@ -130,7 +145,7 @@ function showErrors(req, res, next) {
     name,
     email,
     username,
-    password1,
+    password,
     password2,
   };
 
@@ -160,7 +175,7 @@ async function formPost(req, res) {
       name = '',
       email = '',
       username = '',
-      password1 = '',
+      password = '',
       password2 = '',
     } = {},
   } = req;
@@ -169,14 +184,30 @@ async function formPost(req, res) {
     name,
     email,
     username,
-    password1,
+    password,
     password2,
   };
 
+  data.password = await bcrypt.hash(data.password, 11); 
   await insert2(data);
-
   return res.redirect('/login');
 }
+
+/*  CreateUser fall með hashed passwordi(?)
+async function createUser(username, password) {
+  const hashedPassword = await bcrypt.hash(password, 11);
+
+  const q = `
+  INSERT INTO
+  users (username, password)
+  VALUES ($1, $2)
+  RETURNING *`;
+
+  const result = await query(q, [username, hashedPassword]);
+
+  return result.rows[0];
+}
+*/
 
 /**
  * Route handler fyrir þakkarsíðu.

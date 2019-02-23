@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { Client } = require('pg');
 
 const connectionString = process.env.DATABASE_URL;
@@ -53,10 +55,10 @@ async function deleteRow(id) {
 async function insert2(data) {
   const q = `
 INSERT INTO users
-(username, password1, name, email)
+(username, password, name, email)
 VALUES
 ($1, $2, $3, $4)`;
-  const values = [data.username, data.password1, data.name, data.email];
+  const values = [data.username, data.password, data.name, data.email];
 
   return query(q, values);
 }

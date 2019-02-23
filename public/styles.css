@@ -40,13 +40,20 @@ main {
   margin: 2rem;
 }
 
+.guideButtons {
+  background-color: white;
+  color: blue;
+  cursor: pointer;
+}
+
 .infoButtons {
+  color: red;
   margin-right: 1rem;
   margin-bottom: 2rem;
-  border: none;
-  background-color: white;
-  color: red;
-  cursor: pointer;
+}
+
+.infoButtons:active {
+  text-decoration: underline;
 }
 
 .field {
@@ -121,12 +128,6 @@ main {
   background-color: #fff;
   transition: background-color ease-in 300ms;
 }
-
-/*
-button:hover {
-  background-color: #bbb;
-}
-*/
 
 .submitAppli:hover {
   background-color: #bbb;

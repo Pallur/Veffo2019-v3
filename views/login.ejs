@@ -1,10 +1,12 @@
 <%- include('header') -%>
 
-<a href="/" class="infoButtons">Atvinnuumsókn</a>
-<a href="/login" class="infoButtons">Innskráning</a>
-<a href="/register" class="infoButtons">Nýskráning</a>
+<div class="guideButtons">
+  <a href="/" class="infoButtons">Atvinnuumsókn</a>
+  <a href="/login" class="infoButtons">Innskráning</a>
+  <a href="/register" class="infoButtons">Nýskráning</a>
+</div>
 
-<h1>Nýskráning</h1>
+<h1>Innskráning</h1>
 
 <form method="post" action="/login">
   <div class="field<%= locals.isInvalid('username', errors) ?  ' field--invalid' : '' %>">
@@ -12,8 +14,8 @@
     <input type="text" name="username" id="username" value="<%= username %>" class="">
   </div>
   <div class="field<%= locals.isInvalid('password', errors) ?  ' field--invalid' : '' %>">
-    <label for="password1">Lykilorð</label>
-    <input type="text" name="password1" id="password1" value="<%= password1 %>" class="">
+    <label for="password">Lykilorð</label>
+    <input type="password" name="password" id="password" value="<%= password %>" class="">
   </div>
 
   <% if (errors.length > 0) { %>

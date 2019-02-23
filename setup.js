@@ -19,7 +19,7 @@ async function main() {
   // búa til töflur út frá skema
   try {
     const createTable = await readFileAsync('./schema.sql');
-    await query(createTable.toString('utf8'));
+    await query(createTable.toString('utf-8'));
     console.info('Töflur búnar til');
   } catch (e) {
     console.error('Villa við að búa til töflur:', e.message);
@@ -29,7 +29,7 @@ async function main() {
   // bæta færslum við töflur
   try {
     const insert = await readFileAsync('./insert.sql');
-    await query(insert.toString('utf8'));
+    await query(insert.toString('utf-8'));
     console.info('Gögnum bætt við');
   } catch (e) {
     console.error('Villa við að bæta gögnum við:', e.message);

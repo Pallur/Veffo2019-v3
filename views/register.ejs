@@ -1,8 +1,10 @@
 <%- include('header') -%>
 
-<a href="/" class="infoButtons">Atvinnuumsókn</a>
-<a href="/login" class="infoButtons">Innskráning</a>
-<a href="/register" class="infoButtons">Nýskráning</a>
+<div class="guideButtons">
+  <a href="/" class="infoButtons">Atvinnuumsókn</a>
+  <a href="/login" class="infoButtons">Innskráning</a>
+  <a href="/register" class="infoButtons">Nýskráning</a>
+</div>
 
 <h1>Nýskráning</h1>
 
@@ -19,13 +21,13 @@
     <label for="username">Notendanafn</label>
     <input type="text" name="username" id="username" value="<%= username %>" class="">
   </div>
-  <div class="field<%= locals.isInvalid('password1', errors) ?  ' field--invalid' : '' %>">
-    <label for="password1">Lykilorð</label>
-    <input type="text" name="password1" id="password1" value="<%= password1 %>" class="">
+  <div class="field<%= locals.isInvalid('password', errors) ?  ' field--invalid' : '' %>">
+    <label for="password">Lykilorð</label>
+    <input type="password" name="password" id="password" value="<%= password %>" class="">
   </div>
   <div class="field<%= locals.isInvalid('password2', errors) ?  ' field--invalid' : '' %>">
     <label for="password2">Lykilorð, aftur:</label>
-    <input type="text" name="password2" id="password2" value="<%= password2 %>" class="">
+    <input type="password" name="password2" id="password2" value="<%= password2 %>" class="">
     </div>
 
   <% if (errors.length > 0) { %>
